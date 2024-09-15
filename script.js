@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
             experienceContainer.removeChild(experienceToRemove);
         }
     }
+    // Function to update the profile image when a file is selected
     // Handle Resume Generation
     var generateCVButton = document.getElementById('generatecv');
     var cvop = document.getElementById('cvop');
@@ -147,11 +148,28 @@ document.addEventListener('DOMContentLoaded', function () {
         var userContact = document.getElementById('user-contact');
         var userEmail = document.getElementById('user-email');
         var userAddress = document.getElementById('user-address');
+        var userProfile = document.getElementById('profile');
         document.getElementById('name-updated').innerText = userName.value;
         document.getElementById('role-updated').innerText = userRole.value;
         document.getElementById('number-updated').innerText = "Phone No: ".concat(userContact.value);
         document.getElementById('email-updated').innerText = "Email: ".concat(userEmail.value);
         document.getElementById('address-updated').innerText = "Address: ".concat(userAddress.value);
+        var profileImage = document.getElementById('profile-updated');
+        if (userProfile.files && userProfile.files[0]) {
+            var file = userProfile.files[0]; // Get the selected file
+            var reader = new FileReader(); // Create a FileReader to read the file
+            // Set up a callback to run when the file has been read
+            reader.onload = function (e) {
+                if (e.target && profileImage) {
+                    profileImage.src = e.target.result; // Set the img src to the file's data URL
+                }
+            };
+            // Read the file as a Data URL (this will trigger the onload event)
+            reader.readAsDataURL(file);
+        }
+        else {
+            console.error('No file selected');
+        }
         // Get and update skills
         var skillsListInCV = document.querySelector('.skills-list2');
         skillsListInCV.innerHTML = ''; // Clear existing skills

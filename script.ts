@@ -173,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             experienceContainer.removeChild(experienceToRemove);
         }
     }
+// Function to update the profile image when a file is selected
 
     // Handle Resume Generation
     const generateCVButton = document.getElementById('generatecv') as HTMLButtonElement;
@@ -187,12 +188,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const userContact = document.getElementById('user-contact') as HTMLInputElement;
         const userEmail = document.getElementById('user-email') as HTMLInputElement;
         const userAddress = document.getElementById('user-address') as HTMLInputElement;
+        const userProfile = document.getElementById('profile') as HTMLInputElement;
 
         document.getElementById('name-updated')!.innerText = userName.value;
         document.getElementById('role-updated')!.innerText = userRole.value;
         document.getElementById('number-updated')!.innerText = `Phone No: ${userContact.value}`;
         document.getElementById('email-updated')!.innerText = `Email: ${userEmail.value}`;
         document.getElementById('address-updated')!.innerText = `Address: ${userAddress.value}`;
+        const profileImage = document.getElementById('profile-updated') as HTMLImageElement;
+
+if (userProfile.files && userProfile.files[0]) {
+    const file = userProfile.files[0]; // Get the selected file
+    const reader = new FileReader(); // Create a FileReader to read the file
+
+    // Set up a callback to run when the file has been read
+    reader.onload = function(e) {
+        if (e.target && profileImage) {
+            profileImage.src = e.target.result as string; // Set the img src to the file's data URL
+        }
+    };
+
+    // Read the file as a Data URL (this will trigger the onload event)
+    reader.readAsDataURL(file);
+} else {
+    console.error('No file selected');
+}
+
        
         // Get and update skills
         const skillsListInCV = document.querySelector('.skills-list2') as HTMLDivElement;
